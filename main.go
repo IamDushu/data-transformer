@@ -49,6 +49,7 @@ type OutputRecord struct {
 	UserID              string `json:"user"`
 	UserImage           string `json:"user_image"`
 	Text                string `json:"text"`
+	JobTitle            string `json:"job_title"`
 	ArtisticAbility     int    `json:"artistic_ability"`
 	AthleticAbility     int    `json:"athletic_ability"`
 	MathematicalAbility int    `json:"mathematical_ability"`
@@ -128,7 +129,7 @@ func main() {
 		textParts := []string{}
 
 		// Add context intro
-		textParts = append(textParts, "The following is a question and answer profile of an egg donor.")
+		textParts = append(textParts, "the following is a question and answer profile of an egg donor:")
 
 		// Add selected fields in order
 		for _, key := range fieldsToExtract {
@@ -180,6 +181,7 @@ func main() {
 			DonorCode:           donor.User.DonorCode,
 			ProfileBio:          donor.User.FreezeMember.ProfileBio,
 			Age:                 age,
+			JobTitle:            getStringAnswer(donor, "job_title"),
 			ArtisticAbility:     getIntAnswer(donor, "artistic_ability"),
 			AthleticAbility:     getIntAnswer(donor, "athletic_ability"),
 			MathematicalAbility: getIntAnswer(donor, "mathematical_ability"),
@@ -233,6 +235,7 @@ func main() {
 
 	encoder := json.NewEncoder(outfile)
 	encoder.SetIndent("", "  ")
+	encoder.SetEscapeHTML(false)
 	err = encoder.Encode(outputRecords)
 	if err != nil {
 		panic(err)
