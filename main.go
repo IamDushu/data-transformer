@@ -171,7 +171,7 @@ func main() {
 		// Clean text (lowercase, replace underscores)
 		cleanText := strings.ToLower(strings.ReplaceAll(text, "_", " "))
 
-		birthDate, _ := time.Parse(time.RFC3339, "1992-06-20T00:00:00Z")
+		birthDate, _ := time.Parse(time.RFC3339, donor.User.DateOfBirth)
 		age := age.Age(birthDate)
 
 		record := OutputRecord{
